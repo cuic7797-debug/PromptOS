@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { useAppStore } from '../store/appStore';
 import { generatePrompt, AI_MODELS, analyzeQuality } from '../lib/promptEngine';
+import { analyzeTask } from '../lib/taskAnalyzer';
 import { generateId, copyToClipboard, downloadText, getGradeColor } from '../lib/utils';
 import type { GeneratorForm, QualityScore } from '../types';
 
@@ -16,6 +17,7 @@ const defaultForm: GeneratorForm = {
 export function Generator() {
   const [form, setForm] = useState<GeneratorForm>(defaultForm);
   const [result, setResult] = useState('');
+  const [taskAnalysis,setTaskAnalysis] = useState<any>(null);
   const [quality, setQuality] = useState<QualityScore | null>(null);
   const [showQuality, setShowQuality] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -23,7 +25,57 @@ export function Generator() {
   const { addHistory, settings } = useAppStore();
 
   const handleGenerate = () => {
-    const prompt = generatePrompt({ ...form, aiAdapter: selectedModel });
+    const analysis = analyzeTask(
+  form.goal || form.task
+);
+
+
+setTaskAnalysis(analysis);
+
+
+const enhancedForm = {
+
+
+...form,
+
+
+context:`
+
+任务分析：
+
+行业：
+${analysis.industry}
+
+
+目标：
+${analysis.goal}
+
+
+用户：
+${analysis.audience}
+
+
+执行任务：
+
+${analysis.tasks.join('\n')}
+
+
+输出：
+
+${analysis.outputs.join('\n')}
+
+
+${form.context}
+
+`
+
+};
+
+
+const prompt = generatePrompt({
+...enhancedForm,
+aiAdapter:selectedModel
+});
     setResult(prompt);
     const q = analyzeQuality(prompt);
     setQuality(q);
@@ -115,7 +167,7 @@ export function Generator() {
 
       {/* AI Model Selector */}
       <div className="glass-card rounded-xl p-4">
-        <label className="text-sm font-medium mb-3 block">目标 AI 模型</label>
+        <label className="text-sm font-medium mb-3 block">适配 AI 平台</label>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           {AI_MODELS.map((model) => (
             <button
@@ -229,6 +281,36 @@ export function Generator() {
             </div>
           )}
 
+          <div className="flex flex-wrap gap-2">
+
+<a
+href="https://chat.openai.com/"
+target="_blank"
+className="px-3 py-2 rounded-lg bg-blue-600 text-white text-sm"
+>
+打开 GPT
+</a>
+
+
+<a
+href="https://www.doubao.com/"
+target="_blank"
+className="px-3 py-2 rounded-lg bg-purple-600 text-white text-sm"
+>
+打开豆包
+</a>
+
+
+<a
+href="https://chat.deepseek.com/"
+target="_blank"
+className="px-3 py-2 rounded-lg bg-green-600 text-white text-sm"
+>
+打开 DeepSeek
+</a>
+
+
+</div>
           {/* Generated Prompt */}
           <div className="glass-card rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 dark:border-slate-700">
