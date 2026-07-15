@@ -9,6 +9,28 @@ import { copyToClipboard, generateId } from '../lib/utils';
 import { useAppStore } from '../store/appStore';
 import type { PromptTemplate } from '../types';
 
+function extractField(
+  content:string,
+  field:string
+){
+
+  const regex =
+  new RegExp(
+    `${field}：\\s*([\\s\\S]*?)(?=\\n\\n|$)`
+  );
+
+
+  const match =
+  content.match(regex);
+
+
+  return match
+  ?
+  match[1].trim()
+  :
+  '';
+
+}
 export function Templates() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -77,9 +99,64 @@ export function Templates() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleGoToGenerator = () => {
-    navigate('/generator');
-  };
+ const handleGoToGenerator = () => {
+
+  if (!selectedTemplate) return;
+
+
+  navigate('/generator', {
+
+    state: {
+
+      template: {
+
+
+        role: extractField(
+          selectedTemplate.content,
+          '角色定位'
+        ),
+
+
+        goal: extractField(
+          selectedTemplate.content,
+          '任务目标'
+        ),
+
+
+        context: extractField(
+          selectedTemplate.content,
+          '背景'
+        ),
+
+
+        task: extractField(
+          selectedTemplate.content,
+          '具体任务'
+        ),
+
+
+        constraint: extractField(
+          selectedTemplate.content,
+          '约束'
+        ),
+
+
+        outputFormat: extractField(
+          selectedTemplate.content,
+          '输出格式'
+        ),
+
+
+        qualityCheck: ''
+
+      }
+
+    }
+
+  });
+
+
+};
 
   return (
     <div className="space-y-6">

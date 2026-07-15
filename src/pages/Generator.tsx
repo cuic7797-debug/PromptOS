@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from "react-router-dom";
 import {
   Wand2,
   Copy,
@@ -13,7 +14,7 @@ import {
 } from 'lucide-react';
 
 import { useAppStore } from '../store/appStore';
-import { CopyModal } from '../components/CopyModal';
+import CopyModal from "../components/CopyModal"; 
 
 import {
   generatePrompt,
@@ -37,6 +38,8 @@ import type {
 
 
 
+export function Generator() {
+
 const defaultForm: GeneratorForm = {
 
   role: '',
@@ -53,11 +56,37 @@ const defaultForm: GeneratorForm = {
 
 
 
-export function Generator() {
+const location = useLocation();
+
+const template = location.state?.template;
+useEffect(()=>{
+
+  if(template){
+
+    setForm({
+
+      ...defaultForm,
+
+      ...template
+
+    });
+
+  }
+
+},[template]);
 
 
 const [form,setForm] =
-useState<GeneratorForm>(defaultForm);
+useState<GeneratorForm>(
+template
+?
+{
+...defaultForm,
+...template
+}
+:
+defaultForm
+);
 
 
 const [result,setResult] =

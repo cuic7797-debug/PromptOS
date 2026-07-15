@@ -1,4 +1,5 @@
 import type { PromptTemplate } from '../types';
+import { TASK_TEMPLATES } from './taskTemplates';
 
 export const TEMPLATE_CATEGORIES = [
   '全部', '电商', '短视频', '小红书', 'TikTok', 'Midjourney', 'Stable Diffusion',
@@ -1787,6 +1788,67 @@ SKU数：{sku_count}
 6. 应急预案（设备故障、超时、冷场）
 7. 主持提示（语速、停顿、走位、表情）`
   },
+ ...TASK_TEMPLATES.map(item => ({
+
+    id:item.id,
+
+    category:item.category,
+
+    title:item.title,
+
+    description:item.description,
+
+
+    content:`
+
+角色定位：
+${item.form.role}
+
+
+任务目标：
+${item.form.goal}
+
+
+背景：
+${item.form.context}
+
+
+具体任务：
+${item.form.task}
+
+
+约束：
+${item.form.constraint}
+
+
+输出格式：
+${item.form.outputFormat}
+
+`,
+
+
+    variables:[],
+
+
+    tags:[
+      item.category
+    ],
+
+
+    aiModels:[
+      "GPT",
+      "Claude",
+      "Gemini"
+    ],
+
+
+    isHot:false,
+
+
+    usage:0
+
+  }))
+
 ];
 
 export function getTemplatesByCategory(category: string): PromptTemplate[] {

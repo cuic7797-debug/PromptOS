@@ -15,6 +15,7 @@ import { Settings } from './pages/Settings';
 import { Studio } from './pages/Studio';
 import { Agent } from './pages/Agent';
 import { Business } from './pages/Business';
+import { TaskCenter } from './pages/TaskCenter';
 
 import { useAppStore } from './store/appStore';
 
@@ -104,6 +105,10 @@ function App() {
             <Route 
               path="/business" 
               element={<Business />} 
+            />
+            <Route
+              path="/tasks" 
+              element={<TaskCenter />} 
             />
 
 

@@ -416,7 +416,7 @@ export function Sidebar() {
             font-medium
             ">
 
-              PromptOS v1.0
+              PromptOS v2.0
 
             </span>
 
@@ -431,7 +431,7 @@ export function Sidebar() {
           mt-1
           ">
 
-            完整商业版 · 100+模板
+            AI创作系统 · 商业版
 
           </p>
 

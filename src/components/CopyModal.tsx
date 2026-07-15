@@ -20,7 +20,7 @@ interface CopyModalProps {
 }
 
 
-export function CopyModal({
+export default function CopyModal({
 
   open,
 

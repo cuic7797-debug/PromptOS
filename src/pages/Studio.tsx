@@ -1,61 +1,169 @@
-export function Studio() {
-  return (
-    <div className="space-y-6">
+import {
+  Video,
+  ShoppingBag,
+  PenTool,
+  FileText,
+  Megaphone,
+  Sparkles,
+  ChevronRight
+} from 'lucide-react';
 
-      <div>
-        <h1 className="text-3xl font-bold">
-          🎨 AI 创作中心
-        </h1>
-
-        <p className="text-slate-400 mt-2">
-          文生图、文生视频、商业内容创作工作台
-        </p>
-      </div>
-
-
-      <div className="grid md:grid-cols-3 gap-6">
-
-        <div className="p-6 rounded-xl border">
-          <h2 className="text-xl font-bold">
-            🎨 图片 Prompt
-          </h2>
-
-          <p className="mt-3 text-sm">
-            自动生成 Midjourney、
-            Stable Diffusion、
-            DALL-E 专业提示词
-          </p>
-        </div>
+import { useNavigate } from 'react-router-dom';
+import { CREATIVE_TEMPLATES } from '../data/creativeTemplates';
 
 
-        <div className="p-6 rounded-xl border">
-
-          <h2 className="text-xl font-bold">
-            🎬 视频 Prompt
-          </h2>
-
-          <p className="mt-3 text-sm">
-            自动生成短视频分镜、
-            运镜、镜头语言
-          </p>
-
-        </div>
 
 
-        <div className="p-6 rounded-xl border">
+export function Studio(){
 
-          <h2 className="text-xl font-bold">
-            📦 商业素材
-          </h2>
 
-          <p className="mt-3 text-sm">
-            电商、广告、品牌内容生成
-          </p>
+const navigate = useNavigate();
 
-        </div>
 
-      </div>
 
-    </div>
-  );
+const handleOpen=(item:any)=>{
+
+
+navigate('/generator',{
+
+state:{
+
+template:item.template
+
+}
+
+});
+
+
+};
+
+
+
+return (
+
+<div className="space-y-6">
+
+
+<div>
+
+<h1 className="text-2xl font-bold flex items-center gap-2">
+
+<Sparkles className="text-purple-500"/>
+
+AI创作中心
+
+</h1>
+
+
+<p className="text-slate-500 mt-2">
+
+选择应用场景，一键生成专业AI提示词
+
+</p>
+
+</div>
+
+
+
+
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+
+{
+
+CREATIVE_TEMPLATES.map(item=>{
+
+
+const Icon=item.icon;
+
+
+return (
+
+<button
+
+key={item.id}
+
+onClick={()=>handleOpen(item)}
+
+className="
+glass-card
+rounded-xl
+p-5
+text-left
+hover:shadow-xl
+transition-all
+group
+"
+
+
+>
+
+
+<div className="flex justify-between">
+
+
+<div
+className={`
+p-3
+rounded-xl
+bg-slate-100
+dark:bg-slate-800
+${item.color}
+`}
+>
+
+<Icon className="w-7 h-7"/>
+
+</div>
+
+
+<ChevronRight
+className="
+w-5 h-5
+text-slate-400
+group-hover:text-blue-500
+"
+/>
+
+
+</div>
+
+
+
+<h2 className="font-bold text-lg mt-4">
+
+{item.title}
+
+</h2>
+
+
+
+<p className="text-sm text-slate-500 mt-2">
+
+{item.description}
+
+</p>
+
+
+
+</button>
+
+
+)
+
+
+})
+
+}
+
+
+</div>
+
+
+
+</div>
+
+)
+
 }
