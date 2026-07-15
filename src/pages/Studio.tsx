@@ -77,7 +77,6 @@ CREATIVE_TEMPLATES.map(item=>{
 
 const Icon=item.icon;
 
-
 return (
 
 <button
