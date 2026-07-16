@@ -152,7 +152,10 @@ const enhancedForm={
 
 role:
 
-`你是一名专业的${analysis.industry}专家`,
+`
+你是一名${input}领域商业增长专家，
+具备行业分析、用户洞察、营销策略和商业增长能力。
+`,
 
 
 
@@ -171,9 +174,23 @@ context:
 ${analysis.project}
 
 
+
 行业：
 
 ${analysis.industry}
+
+
+
+行业洞察：
+
+${analysis.industryInsights?.join("\n") || "暂无行业洞察"}
+
+
+
+行业策略：
+
+${analysis.industryStrategies?.join("\n") || "暂无行业策略"}
+
 
 
 商业目标：
@@ -181,9 +198,11 @@ ${analysis.industry}
 ${analysis.goal}
 
 
+
 目标用户：
 
 ${analysis.audience}
+
 
 
 执行策略：
@@ -191,14 +210,17 @@ ${analysis.audience}
 ${analysis.strategy.join("\n")}
 
 
+
 任务拆解：
 
 ${analysis.tasks.join("\n")}
 
 
+
 最终输出：
 
 ${analysis.outputs.join("\n")}
+
 
 
 `,
@@ -219,13 +241,57 @@ constraint:
 
 outputFormat:
 
-analysis.outputs.join("\n"),
+`
+请生成完整商业执行方案：
+
+## 第一部分：项目分析报告
+
+包含：
+
+1. 行业分析
+2. 用户画像
+3. 市场机会
+4. 产品定位
+
+
+## 第二部分：商业增长方案
+
+包含：
+
+1. 产品卖点分析
+2. 用户购买心理
+3. 营销渠道规划
+4. 成交转化策略
+
+
+## 第三部分：内容营销方案
+
+包含：
+
+1. 短视频内容规划
+2. 爆款选题方向
+3. 文案策略
+
+
+## 第四部分：销售转化方案
+
+包含：
+
+1. 流量获取
+2. 用户转化路径
+3. 复购策略
+
+
+## 第五部分：AI执行Prompt
+
+输出可直接复制给AI执行的专业Prompt
+`,
 
 
 
 qualityCheck:
 
-"检查逻辑完整性"
+"检查逻辑完整性",
 
 
 

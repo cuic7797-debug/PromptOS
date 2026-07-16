@@ -45,26 +45,47 @@ export interface AppState {
 }
 
 export interface GeneratorForm {
-  role: string;
-  goal: string;
-  context: string;
-  task: string;
-  constraint: string;
-  outputFormat: string;
-  qualityCheck: string;
-  aiAdapter: string;
-  mode: 'basic' | 'advanced' | 'expert';
+
+  role:string;
+
+  goal:string;
+
+  context:string;
+
+  task:string;
+
+  constraint:string;
+
+  outputFormat:string;
+
+  qualityCheck:string;
+
+  aiAdapter:string;
+
+  mode:'basic' | 'advanced' | 'expert';
+
 }
 
+
+
 export interface QualityScore {
-  clarity: number;
-  specificity: number;
-  structure: number;
-  completeness: number;
-  executability: number;
-  overall: number;
-  grade: 'S' | 'A' | 'B' | 'C' | 'D';
-  suggestions: string[];
+
+  clarity:number;
+
+  specificity:number;
+
+  structure:number;
+
+  completeness:number;
+
+  executability:number;
+
+  overall:number;
+
+  grade:string;
+
+  suggestions:string[];
+
 }
 
 export interface AIModel {
