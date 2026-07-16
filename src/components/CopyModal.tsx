@@ -44,7 +44,7 @@ export default function CopyModal({
 
       await navigator.clipboard.writeText(prompt);
 
-      alert("复制成功！");
+      console.log("复制成功");
 
     }catch(error){
 
