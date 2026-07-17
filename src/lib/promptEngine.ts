@@ -818,24 +818,16 @@ function getPlatformAdapter(model:string){
 
 const adapters:any={
 
+  deepseek:{
+    name:"DeepSeek",
+    style:
+      '强调深度推理、商业分析、逻辑拆解和结构化决策',
+    format:
+      '按照商业分析步骤输出，先分析，再规划，最后给执行方案'
+  },
 
-deepseek:{
-
-name:"DeepSeek",
-
-style:
-"强调逻辑推理、商业分析和复杂任务拆解",
-
-format:
-"步骤化输出，结构清晰"
-
-},
-
-
-
-doubao:{
-
-name:"豆包",
+  doubao:{
+    name:"豆包",
 
 style:
 "适合中文营销、电商和内容生产",

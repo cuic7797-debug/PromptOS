@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { GeneratorSettings } from "../components/GeneratorSettings";
 import { useState } from "react";
 
@@ -36,6 +37,21 @@ import {
 
 
 import {
+  generateBusinessContent
+} from "../lib/contentEngine";
+
+
+import {
+  BusinessReport
+} from "../components/BusinessReport";
+
+
+import type {
+  BusinessContent
+} from "../lib/contentEngine";
+
+
+import {
   generateId,
   copyToClipboard,
   downloadText
@@ -62,6 +78,9 @@ import type {
 export function Generator(){
 
 
+const navigate = useNavigate();
+
+
 
 const [input,setInput]=useState("");
 
@@ -71,7 +90,7 @@ const [analysis,setAnalysis]=useState<TaskAnalysis|null>(null);
 
 
 
-const [prompt,setPrompt]=useState("");
+const [result,setResult]=useState("");
 
 
 
@@ -87,15 +106,20 @@ const [quality,setQuality]=useState<QualityScore|null>(null);
 
 
 
+const [businessContent,setBusinessContent]=useState<BusinessContent|null>(null);
+
+
 const [loading,setLoading]=useState(false);
 
 
-const [mode,setMode]=useState<'basic' | 'advanced' | 'expert'>("advanced");
+const [mode,setMode]=useState<'basic' | 'advanced' | 'expert'>("expert");
 
 
 const [selectedModel,setSelectedModel]=useState("deepseek");
 
+
 const [showSettings,setShowSettings]=useState(false);
+
 
 const {
 addHistory
@@ -106,6 +130,15 @@ addHistory
 
 
 // AI分析
+
+
+const handleWorkflow =()=>{
+
+navigate(
+`/workflow?input=${encodeURIComponent(input)}`
+);
+
+};
 
 
 const handleAnalyze=()=>{
@@ -144,6 +177,13 @@ const handleGenerate=()=>{
 
 
 if(!analysis) return;
+
+// 生成商业内容
+const content =
+generateBusinessContent(analysis);
+
+
+setBusinessContent(content);
 
 
 
@@ -301,12 +341,9 @@ qualityCheck:
 
 
 
-const result=
-
-generatePrompt({
+const generatedPrompt = generatePrompt({
 
 ...enhancedForm,
-
 
 aiAdapter:selectedModel,
 
@@ -315,17 +352,11 @@ mode
 });
 
 
+setResult(generatedPrompt);
 
 
-
-setPrompt(result);
-
-
-
-const score=
-
-analyzeQuality(result);
-
+const score =
+analyzeQuality(generatedPrompt);
 
 
 setQuality(score);
@@ -345,7 +376,7 @@ title:input,
 content:result,
 
 
-model:"gpt-4",
+model:selectedModel,
 
 
 createdAt:Date.now(),
@@ -380,7 +411,7 @@ setShowResult(true);
 const handleCopy=async()=>{
 
 
-await copyToClipboard(prompt);
+await copyToClipboard(result);
 
 
 
@@ -394,22 +425,11 @@ setShowCopyModal(true);
 
 
 const handleDownload=()=>{
-
-
-downloadText(
-
-prompt,
-
-`prompt-${Date.now()}.txt`
-
-);
-
-
+  downloadText(
+    result,
+    `prompt-${Date.now()}.txt`
+  );
 };
-
-
-
-
 
 return (
 
@@ -675,7 +695,99 @@ text-slate-500
 }
 
 
+{
+businessContent && (
 
+<div className="
+glass-card
+rounded-xl
+p-5
+space-y-4
+">
+
+<h2 className="font-bold text-lg">
+AI商业执行内容
+</h2>
+
+
+<div>
+
+<h3 className="font-medium">
+产品分析
+</h3>
+
+{
+businessContent.productAnalysis.map(
+(item,index)=>(
+<p key={index}>
+• {item}
+</p>
+)
+)
+
+}
+
+</div>
+
+
+
+<div>
+
+<h3 className="font-medium">
+用户画像
+</h3>
+
+{
+businessContent.userProfile.map(
+(item,index)=>(
+<p key={index}>
+• {item}
+</p>
+)
+)
+
+}
+
+</div>
+
+
+
+
+<div>
+
+<h3 className="font-medium">
+营销方案
+</h3>
+
+{
+businessContent.marketingPlan.map(
+(item,index)=>(
+<p key={index}>
+• {item}
+</p>
+)
+)
+
+}
+
+</div>
+
+
+</div>
+
+)
+}
+
+
+{
+businessContent && (
+
+<BusinessReport
+content={businessContent}
+/>
+
+)
+}
 
 
 
@@ -685,7 +797,10 @@ text-slate-500
 open={showResult}
 
 
-prompt={prompt}
+prompt={result}
+
+
+businessContent={businessContent}
 
 
 onClose={()=>setShowResult(false)}
@@ -695,6 +810,9 @@ onCopy={handleCopy}
 
 
 onDownload={handleDownload}
+
+
+onWorkflow={handleWorkflow}
 
 
 />
@@ -710,7 +828,7 @@ onDownload={handleDownload}
 open={showCopyModal}
 
 
-prompt={prompt}
+prompt={result}
 
 
 onClose={()=>setShowCopyModal(false)}

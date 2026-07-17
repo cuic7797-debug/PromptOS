@@ -16,7 +16,7 @@ import { Studio } from './pages/Studio';
 import { Agent } from './pages/Agent';
 import { Business } from './pages/Business';
 import { TaskCenter } from './pages/TaskCenter';
-
+import Workflow from './pages/Workflow';
 import { useAppStore } from './store/appStore';
 
 
@@ -109,6 +109,10 @@ function App() {
             <Route
               path="/tasks" 
               element={<TaskCenter />} 
+            />
+            <Route
+              path="/workflow"
+              element={<Workflow />}
             />
 
 

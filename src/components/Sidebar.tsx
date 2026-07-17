@@ -72,9 +72,9 @@ const navItems: NavItem[] = [
 
 
   { 
-    path: '/agent', 
-    label: 'AI工作流', 
-    icon: 'Bot' 
+  path: '/workflow', 
+  label: 'AI工作流', 
+  icon: 'Bot' 
   },
 
 
