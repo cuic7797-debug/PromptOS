@@ -70,13 +70,13 @@ export function Dashboard() {
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="w-5 h-5 text-blue-400" />
-            <span className="text-blue-400 text-sm font-medium">PromptOS v1.0 完整商业版</span>
+            <span className="text-blue-400 text-sm font-medium">PromptOS v2.0 AI生产系统</span>
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
             欢迎来到 PromptOS
           </h1>
           <p className="text-slate-400 max-w-xl">
-            国内最好用的免费 Prompt 工具。零 API 成本，专业级提示词生成、优化与管理。
+            免费 AI 创业助手，帮助你从想法分析、商业方案到 AI 工作流执行。
           </p>
 
           <div className="flex flex-wrap gap-3 mt-6">
@@ -354,7 +354,7 @@ export function Dashboard() {
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
           <div className="flex-1">
-            <p className="text-sm font-medium">PromptOS v1.0 完整商业版已就绪</p>
+            <p className="text-sm font-medium">PromptOS v2.0 AI生产系统已就绪</p>
             <p className="text-xs text-slate-500 dark:text-slate-400">
               100+专业模板 · Prompt Engine · 质量评分 · 优化翻译 · 零API成本
             </p>
