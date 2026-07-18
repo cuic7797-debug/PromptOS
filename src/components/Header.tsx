@@ -26,7 +26,7 @@ export function Header() {
               PromptOS
             </span>
             <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
-              v1.0
+              v2.0
             </span>
           </div>
         </div>
